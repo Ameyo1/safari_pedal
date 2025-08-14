@@ -1,0 +1,225 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("POSTGRES_URL")
+}
+
+model Country {
+  id     String  @id @default(uuid())
+  name   String
+  parks  Park[]
+  guides Guide[]
+}
+
+model Park {
+  id            String      @id @default(uuid())
+  name          String
+  description   String
+  lat           Float
+  lng           Float
+  country       Country     @relation(fields: [countryId], references: [id])
+  countryId     String
+  featuredImage String
+  tours         TourEvent[]
+}
+
+model TourEvent {
+  id             String        @id @default(uuid())
+  title          String
+  startDate      DateTime
+  endDate        DateTime
+  itinerary      String[]
+  price          Float
+  latitude       Float?
+  longitude      Float?
+  availableSlots Int
+  featuredImage  String
+  destinations   Destination[] @relation("TourDestinations")
+  hotels         Hotel[]       @relation("TourHotels")
+  park           Park          @relation(fields: [parkId], references: [id])
+  parkId         String
+  guides         Guide[]       @relation("TourGuides") // ✅ REMOVE references
+  bookings       Booking[]
+  reviews        Review[]
+}
+
+model Destination {
+  id          String      @id @default(cuid())
+  name        String
+  region      String
+  description String
+  tours       TourEvent[] @relation("TourDestinations")
+}
+
+model Hotel {
+  id     String      @id @default(cuid())
+  name   String
+  type   String
+  region String
+  tours  TourEvent[] @relation("TourHotels")
+}
+
+model Guide {
+  id           String      @id @default(uuid())
+  name         String
+  bio          String
+  languages    String[]
+  rating       Float
+  profileImage String
+  country      Country     @relation(fields: [countryId], references: [id])
+  countryId    String
+  tours        TourEvent[] @relation("TourGuides") // ✅ REMOVE references
+}
+
+model Booking {
+  id        String        @id @default(cuid())
+  tourId    String
+  user      User?         @relation(fields: [userId], references: [id])
+  userId    String?
+  email     String
+  phone     String?
+  travelers Int
+  startDate DateTime
+  endDate   DateTime
+  notes     String?
+  status    BookingStatus
+  createdAt DateTime      @default(now())
+  tour      TourEvent     @relation(fields: [tourId], references: [id])
+}
+
+model User {
+  id           String     @id @default(uuid())
+  name         String
+  email        String     @unique
+  phone        String?
+  nationality  String?
+  passwordHash String
+  bookings     Booking[]
+  reviews      Review[]
+  blogPosts    BlogPost[]
+  registrationForm RegistrationForm[]
+  eventLog     EventLog[]
+}
+
+model Review {
+  id          String    @id @default(uuid())
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+  tourEvent   TourEvent @relation(fields: [tourEventId], references: [id])
+  tourEventId String
+  rating      Int
+  comment     String
+  createdAt   DateTime  @default(now())
+}
+
+model BlogPost {
+  id          String   @id @default(uuid())
+  title       String
+  content     String
+  slug        String[]
+  coverImage  String
+  publishedAt DateTime @default(now())
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    String
+}
+
+enum BookingStatus {
+  pending
+  confirmed
+  cancelled
+}
+
+model MedicalForm {
+  id                String       @id @default(uuid())
+  participantName   String
+  phone             String
+  email             String
+  medicalConditions String?
+  allergies         String?
+  injuries          String?
+  limitations       String?
+  otherInfo         String?
+  signedName        String
+  signedDate        DateTime
+  createdAt         DateTime     @default(now())
+  submission        Submission[]
+}
+
+model PolicyAgreement {
+  id              String       @id @default(uuid())
+  participantName String
+  signedDate      DateTime
+  agreed          Boolean
+  createdAt       DateTime     @default(now())
+  submission      Submission[]
+}
+
+model WaiverAgreement {
+  id              String       @id @default(uuid())
+  participantName String
+  phone           String
+  email           String
+  signedDate      DateTime
+  agreed          Boolean
+  createdAt       DateTime     @default(now())
+  submission      Submission[]
+}
+model RegistrationForm {
+  id                  String   @id @default(uuid())
+  userId              String
+  user                User     @relation(fields: [userId], references: [id])
+
+  address             String
+  category            String
+  competitiveLevel    String?
+  emergencyName       String
+  emergencyRelation   String
+  emergencyPhone      String
+  emergencyEmail      String
+  foodAllergies       String?
+  medicationAllergies String?
+  hasInsurance        Boolean
+  insuranceDetails    String?
+  signedDate          DateTime
+  createdAt           DateTime @default(now())
+
+  submission          Submission[]
+
+  @@index([userId]) // ✅ Enables efficient querying by user
+}
+
+
+
+model Submission {
+  id              String   @id @default(uuid())
+  tourId          String
+  participantName String
+  email           String
+  phone           String
+  createdAt       DateTime @default(now())
+
+  medical   MedicalForm? @relation(fields: [medicalId], references: [id])
+  medicalId String?
+
+  policy   PolicyAgreement? @relation(fields: [policyId], references: [id])
+  policyId String?
+
+  waiver   WaiverAgreement? @relation(fields: [waiverId], references: [id])
+  waiverId String?
+
+  registration   RegistrationForm? @relation(fields: [registrationId], references: [id])
+  registrationId String?
+}
+
+model EventLog {
+  id          String   @id @default(uuid())
+  type        String   // e.g. "registration", "booking"
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id])
+  metadata    Json?
+  timestamp   DateTime @default(now())
+}
