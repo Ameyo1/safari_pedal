@@ -1,10 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   eslint: {
     ignoreDuringBuilds: true,
   },
+
+  // 1) Turn off Next.js’s built-in CSS optimizer entirely
+  experimental: {
+    optimizeCss: false,
+  },
+swcMinify: true,
 };
 
 export default nextConfig;

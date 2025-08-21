@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/homePage/footer/Footer";
 import ResponsiveNav from "@/components/navbar/Responsive";
@@ -8,15 +7,18 @@ import { authOptions } from "@/auth";
 import { getServerSession } from "next-auth";
 import ScrollToTop from "@/components/helper/ScrollToTop";
 
-const geistSans = Geist({
+import { Inter, Roboto_Mono } from "next/font/google";
+
+const geistSans = Inter({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
+const geistMono = Roboto_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
 
 export const metadata: Metadata = {
   title: "Pedal Safari | Tours and Travel",
