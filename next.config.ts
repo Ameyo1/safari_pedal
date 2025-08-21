@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizeCss: false,
   },
-
+swcMinify: true,
 };
 
 export default nextConfig;
