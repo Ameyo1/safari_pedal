@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/homePage/footer/Footer";
 import ResponsiveNav from "@/components/navbar/Responsive";
@@ -32,7 +31,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body>
         <Providers session={session}>
           <ResponsiveNav />
           {children}
