@@ -6,13 +6,14 @@ import Providers from "@/components/Providers";
 import { authOptions } from "@/auth";
 import { getServerSession } from "next-auth";
 import ScrollToTop from "@/components/helper/ScrollToTop";
+import { Inter, Roboto_Mono } from "next/font/google";
 
-const geistSans = Geist({
+const geistSans = Inter({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
+const geistMono = Roboto_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
