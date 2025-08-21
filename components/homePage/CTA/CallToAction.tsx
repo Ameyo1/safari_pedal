@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function CallToAction() {
   return (
     <section className="bg-yellow-50 py-16 px-4 md:px-12 text-center">
@@ -6,18 +8,18 @@ export default function CallToAction() {
         Whether you're dreaming of the Serengeti or seeking hidden gems in East Africa, we’ll craft a journey that’s personal, ethical, and unforgettable.
       </p>
       <div className="flex justify-center gap-4 flex-wrap">
-        <a
+        <Link
           href="/tours"
           className="bg-blue-600 text-white px-6 py-3 rounded-md font-semibold hover:bg-blue-700 transition"
         >
           Explore Event
-        </a>
-        <a
+        </Link>
+        <Link
           href="/contacts"
           className="border border-blue-600 text-blue-600 px-6 py-3 rounded-md font-semibold hover:bg-blue-50 transition"
         >
           Talk to Pedal Safari
-        </a>
+        </Link>
       </div>
     </section>
   );

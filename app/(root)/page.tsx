@@ -6,6 +6,7 @@ import TestimonialsSlider from "@/components/homePage/testimonials/TestimonialSl
 import WhyPedalWithUs from "@/components/homePage/whyPedal/WhyPedalWithUs";
 import EventCategories from "@/components/layout/categories/EventCategories";
 import { prisma } from "@/lib/prisma";
+import Image from "next/image";
 import Link from "next/link";
 
 export default async function HomePage() {
@@ -29,7 +30,7 @@ export default async function HomePage() {
               to the north, and a wealth of cultural attributes."
         />
         <div className="m-4 flex flex-col items-center md:flex-row md:justify-between">
-          <img src="/images/east-africa-wildlife.jpg" alt="Pedal Safari" className="w-full md:w-[50%] h-auto rounded-lg shadow-md" />
+          <Image src="/images/east-africa-wildlife.jpg" alt="Pedal Safari" width={400} height={150} className="w-full md:w-[50%] h-auto rounded-lg shadow-md" />
           <div className="mt-2 md:mt-0 md:ml-4">
             <SectionHeadings
               heading="Our Mission"

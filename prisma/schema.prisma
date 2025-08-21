@@ -92,17 +92,27 @@ model Booking {
 }
 
 model User {
-  id           String     @id @default(uuid())
-  name         String
-  email        String     @unique
-  phone        String?
-  nationality  String?
-  passwordHash String
-  bookings     Booking[]
-  reviews      Review[]
-  blogPosts    BlogPost[]
+  id               String             @id @default(uuid())
+  name             String
+  email            String             @unique
+  phone            String?
+  coverImage       String?
+  nationality      String?
+  passwordHash     String
+  role             String?
+  bookings         Booking[]
+  reviews          Review[]
+  blogPosts        BlogPost[]
   registrationForm RegistrationForm[]
-  eventLog     EventLog[]
+  eventLog         EventLog[]
+  medicalForm      MedicalForm[]
+  policyAgreement  PolicyAgreement[]
+  waiverAgreement  WaiverAgreement[]
+  accounts  Account[]
+  sessions  Session[]
+  loginEvent       LoginEvent[]
+  signupEvent      signupEvent[]
+  authEvents        AuthEvents[]
 }
 
 model Review {
@@ -134,8 +144,10 @@ enum BookingStatus {
 }
 
 model MedicalForm {
-  id                String       @id @default(uuid())
-  participantName   String
+  id     String @id @default(uuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+
   phone             String
   email             String
   medicalConditions String?
@@ -150,28 +162,34 @@ model MedicalForm {
 }
 
 model PolicyAgreement {
-  id              String       @id @default(uuid())
-  participantName String
-  signedDate      DateTime
-  agreed          Boolean
-  createdAt       DateTime     @default(now())
-  submission      Submission[]
+  id     String @id @default(uuid())
+  userId String   @unique   
+  user   User   @relation(fields: [userId], references: [id])
+
+  signedDate DateTime
+  agreed     Boolean
+  createdAt  DateTime     @default(now())
+  submission Submission[]
+
 }
 
 model WaiverAgreement {
-  id              String       @id @default(uuid())
-  participantName String
-  phone           String
-  email           String
-  signedDate      DateTime
-  agreed          Boolean
-  createdAt       DateTime     @default(now())
-  submission      Submission[]
+  id     String @id @default(uuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+
+  phone      String
+  email      String
+  signedDate DateTime
+  agreed     Boolean
+  createdAt  DateTime     @default(now())
+  submission Submission[]
 }
+
 model RegistrationForm {
-  id                  String   @id @default(uuid())
-  userId              String
-  user                User     @relation(fields: [userId], references: [id])
+  id     String @id @default(uuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
 
   address             String
   category            String
@@ -187,12 +205,10 @@ model RegistrationForm {
   signedDate          DateTime
   createdAt           DateTime @default(now())
 
-  submission          Submission[]
+  submission Submission[]
 
   @@index([userId]) // ✅ Enables efficient querying by user
 }
-
-
 
 model Submission {
   id              String   @id @default(uuid())
@@ -216,10 +232,83 @@ model Submission {
 }
 
 model EventLog {
-  id          String   @id @default(uuid())
-  type        String   // e.g. "registration", "booking"
-  userId      String?
-  user        User?    @relation(fields: [userId], references: [id])
-  metadata    Json?
-  timestamp   DateTime @default(now())
+  id        String   @id @default(uuid())
+  type      String // e.g. "registration", "booking"
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  metadata  Json?
+  timestamp DateTime @default(now())
+}
+model Account {
+  id                String   @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  access_token      String?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  expires      DateTime
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model LoginEvent {
+  id        String   @id @default(cuid())
+  userId    String?  // optional so failures without a user don't crash
+  email     String?
+  ip        String?
+  provider  String
+  success   Boolean
+  reason    String?
+  timestamp DateTime @default(now())
+
+  user      User?    @relation(fields: [userId], references: [id])
+}
+
+
+model signupEvent {
+  id        String   @id @default(cuid())
+  userId    String?  @db.VarChar(191)
+  email     String?  @db.VarChar(191)
+  ip        String?  @db.VarChar(45)
+  userAgent String?
+  success   Boolean
+  reason    String?
+  createdAt DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id])
+}
+
+model AuthEvents {
+  id        String   @id @default(cuid())
+  type      String   // "LOGIN" or "SIGNUP"
+  userId    String?  @db.VarChar(191)
+  email     String?  @db.VarChar(191)
+  ip        String?  @db.VarChar(45)
+  userAgent String?
+  success   Boolean
+  reason    String?
+  createdAt DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id])
 }

@@ -1,11 +1,11 @@
 // components/AboutUs.tsx
-
+import Image from "next/image";
 import SectionHeadings from "@/components/helper/sectionHeadings";
 import React from "react";
 
 const AboutUs: React.FC = () => {
   return (
-    <section className="bg-white text-gray-800 px-6 py-12 md:px-16 lg:px-24">
+    <section className="bg-white-500 text-gray-900 px-6 py-12 md:px-16 lg:px-24">
       <div className="max-w-5xl mx-auto space-y-12">
         {/* Header */}
         <header className="text-center mt-12 bg-gray-50 p-6 rounded-lg shadow-md">
@@ -16,7 +16,7 @@ const AboutUs: React.FC = () => {
         {/* Mission */}
         <section>
           <h2 className="text-2xl font-semibold mb-4">Who we are</h2>
-          <p>
+          <p className="text-lg">
             Pedal Safari is a tri-annual ecotourism event. It promotes cycling and 
 vanpool tourism in multiple regions of Africa. Pedal Safari events 
 showcases the beauty of a 
@@ -41,7 +41,7 @@ the Pedal Safari website.
         </section>
         <section>
           <h2 className="text-2xl font-semibold mb-4"> Our Mission</h2>
-          <p>
+          <p className="text-lg">
             Pedal Safari’s mission is to provide a first-hand cultural, educational, 
 and eco-friendly experience for all levels of cyclists and vanpool 
 travellers to different geographical regions in Africa. 
@@ -53,9 +53,11 @@ travellers to different geographical regions in Africa.
         {/* Goals */}
         <section >
           <div className="flex flex-row items-center justify-between space-y-4 md:space-y-0 md:space-x-6">
-          <img
-            src="/images/h2.jpg"
-            alt="Our Goals"
+          <Image
+            src="/images/h1.jpg"
+            alt="Our Mission"
+            width={500}
+            height={300}
             className="w-[50%] h-auto rounded-lg shadow-md"
           />
           <div className="w-[50%] mx-4">
@@ -64,7 +66,7 @@ travellers to different geographical regions in Africa.
             description="Our goals reflect our commitment to sustainable and responsible travel."
             
           />
-          <ul className="list-disc list-inside space-y-2 text-gray-700 mt-2">
+          <ul className="list-disc list-inside space-y-2 text-gray-900 text-lg mt-2">
             <li>Support education in host communities</li>
             <li>Promote forestation and conservation</li>
             <li>Encourage sustainable tourism practices</li>
@@ -85,7 +87,7 @@ travellers to different geographical regions in Africa.
               description="Our objectives guide our actions and ensure we stay true to our mission."
             />
           
-          <ul className="list-disc list-inside space-y-2">
+          <ul className="list-disc list-inside space-y-2 text-lg">
             <li>Host tri-annual cycling and vanpool events</li>
             <li>Promote local culture and heritage</li>
             <li>Encourage sustainable tourism practices</li>
@@ -95,9 +97,12 @@ travellers to different geographical regions in Africa.
             <li>Engage in forestation and conservation efforts</li>
           </ul>
           </div>
-           <img
+           <Image
               src="/images/h2.jpg"
               alt="Our Objectives"
+              
+            width={500}
+            height={300}
               className="w-[50%] h-auto rounded-lg shadow-md"
             />
           </div>
@@ -106,7 +111,7 @@ travellers to different geographical regions in Africa.
         {/* Region & Routes */}
         <section>
           <h2 className="text-2xl font-semibold mb-4"> Where We Ride</h2>
-          <p>
+          <p className="text-lg">
             While East Africa serves as the mainstay for Pedal Safari events, 
 Pedal Safari is not be limited to the region. Due to ease of access, 
 however, Tanzania, Kenya, and Uganda serve as the base of Pedal 
@@ -128,7 +133,7 @@ occasional events outside of Africa.
         {/* Safety */}
         <section>
           <h2 className="text-2xl font-semibold mb-4"> Safety First</h2>
-          <ul className="list-disc list-inside space-y-2">
+          <ul className="list-disc list-inside space-y-2 text-lg">
             <li>Politically stable regions only</li>
             <li>Medical teams and evacuation protocols</li>
             <li>Mandatory helmet use and no night riding</li>
@@ -148,7 +153,7 @@ every event and periodically during the event. </li>
         {/* Community Engagement */}
         <section>
           <h2 className="text-2xl font-semibold mb-4"> Community Engagement</h2>
-          <p>
+          <p className="text-lg">
             Participants engage in cultural tours, Q&A with local officials, and community service
             projects during multi-day stopovers.
           </p>
@@ -157,15 +162,15 @@ every event and periodically during the event. </li>
         {/* Outreach & Participation */}
         <section>
           <h2 className="text-2xl font-semibold mb-4"> Outreach & Participation</h2>
-          <p>
+          <p className="text-lg">
             We promote Pedal Safari at cycling clubs, universities, and conventions. To join:
           </p>
-          <ol className="list-decimal list-inside space-y-2 mt-2">
+          <ol className="list-decimal list-inside space-y-2 mt-2 text-lg">
             <li>Fill out a medical form</li>
             <li>Sign our policies and waiver</li>
             <li>Register online</li>
           </ol>
-          <p className="mt-2">
+          <p className="mt-2 text-lg">
             Early registration is encouraged. Airfare not included—discounts may be shared if available.
           </p>
         </section>
@@ -173,7 +178,7 @@ every event and periodically during the event. </li>
         {/* Event Route */}
         <section>
           <h2 className="text-2xl font-semibold mb-4">2026 Event Route</h2>
-          <p>
+          <p className="text-lg">
             The next event begins in Arusha, Tanzania, travels through Kenya, and concludes in Uganda.
             Divided into five legs, each offers competitive and non-competitive options.
           </p>
@@ -182,7 +187,7 @@ every event and periodically during the event. </li>
         {/* Costs */}
         <section>
           <h2 className="text-2xl font-semibold mb-4"> What’s Included in the Costs</h2>
-          <ul className="list-disc list-inside space-y-2">
+          <ul className="list-disc list-inside space-y-2 text-lg">
             <li>Airport pickup and drop-off</li>
             <li>Lodging and camping</li>
             <li>Meals, snacks, and water</li>

@@ -33,7 +33,7 @@ export default function EventTable({ logs }: { logs: any[] }) {
           {filtered.map(log => (
             <tr key={log.id} className="border-t">
               <td className="px-4 py-2">{log.type}</td>
-              <td className="px-4 py-2">{log.user?.email ?? '—'}</td>
+              <td className="px-4 py-2">{log.user?.name ?? '—'}</td>
               <td className="px-4 py-2">{new Date(log.timestamp).toLocaleString()}</td>
               <td className="px-4 py-2 text-sm text-gray-700">
                 {Object.entries(log.metadata ?? {}).map(([key, value]) => (

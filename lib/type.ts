@@ -68,5 +68,15 @@ export type StepProps = {
   errors: Errors;
 };
 
+export type Credentials = {
+  email: string;
+  password: string;
+};
 
-
+export type TeamMember = {
+  name: string
+  role: string
+  bio?: string
+  avatarUrl?: string
+  languages?: string[]
+}

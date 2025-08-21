@@ -1,34 +1,82 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import CompletionTracker from '@/components/CompletionTracker';
+import { useSession } from 'next-auth/react';
 
 export default function PoliciesPage() {
   const router = useRouter();
-  const [form, setForm] = useState({
-    participantName: '',
-    signedDate: '',
-    agreed: false,
-  });
+  const { data: session, status } = useSession();
+  const [agreed, setAgreed] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [checkingCompletion, setCheckingCompletion] = useState(true);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
-    setForm({ ...form, [name]: type === 'checkbox' ? checked : value });
-  };
+  // 🔎 Check completion status
+  useEffect(() => {
+    if (!session?.user?.id) return;
+
+    const checkCompletion = async () => {
+      try {
+        const res = await fetch('/api/completion-status');
+        if (!res.ok) throw new Error('Failed to fetch status');
+
+        const { data } = await res.json();
+
+        if (!data.hasPrivacyRecord) {
+          // stay here (policies page)
+          setCheckingCompletion(false);
+        } else if (!data.hasMedicalRecord) {
+          router.replace('/participate/medical');
+        } else if (!data.hasWaiverRecord) {
+          router.replace('/participate/waiver');
+        } else {
+          router.replace('/dashboard');
+        }
+      } catch (err) {
+        console.error('Error checking completion status:', err);
+      } finally {
+        setCheckingCompletion(false);
+      }
+    };
+
+    checkCompletion();
+  }, [router, session?.user?.id]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await fetch('/api/policies', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form),
-    });
-    router.push('/participate/waiver');
+    setLoading(true);
+
+    try {
+      const res = await fetch('/api/policies', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ agreed }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        router.push('/participate/medical');
+      } else {
+        alert(data.error || 'Failed to save policies');
+      }
+    } catch (err) {
+      console.error('Error submitting policy agreement:', err);
+      alert('Failed to save policies');
+    } finally {
+      setLoading(false);
+    }
   };
 
+  if (status === 'loading' || checkingCompletion) return <p>Loading...</p>;
+  if (!session) return <p className="text-red-600">You must be logged in to continue.</p>;
+
   return (
-    <>
-      <h1 className="text-2xl font-bold mb-6">Pedal Safari Policies</h1>
+    <div className="max-w-2xl mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Pedal Safari Policies</h1>
+      <CompletionTracker />
+
       <div className="text-sm text-gray-700 space-y-4 mb-6">
         <p>▪ Each rider must wear a helmet and have a rearview mirror.</p>
         <p>▪ Keep a medical card or insurance copy at all times.</p>
@@ -44,40 +92,21 @@ export default function PoliciesPage() {
         <label className="flex items-center space-x-2">
           <input
             type="checkbox"
-            name="agreed"
-            checked={form.agreed}
-            onChange={handleChange}
+            checked={agreed}
+            onChange={e => setAgreed(e.target.checked)}
             required
           />
-          <span>
-            I have read and agree to comply with the Pedal Safari policies.
-          </span>
+          <span>I have read and agree to comply with the Pedal Safari policies.</span>
         </label>
-
-        <input
-          type="text"
-          name="participantName"
-          placeholder="Participant’s Name"
-          required
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-        />
-
-        <input
-          type="date"
-          name="signedDate"
-          required
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-        />
 
         <button
           type="submit"
+          disabled={loading}
           className="bg-rose-500 text-white px-6 py-2 rounded hover:bg-rose-600"
         >
-          Next: Waiver
+          {loading ? 'Saving...' : 'Next: Medical Form'}
         </button>
       </form>
-    </>
+    </div>
   );
 }

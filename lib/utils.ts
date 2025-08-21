@@ -99,3 +99,13 @@ export function extractYouTubeID(urlOrID: string): string | null {
   // Return null if no match is found
   return null;
 }
+
+export function extractProviderId(profile: unknown, provider: string): string | undefined {
+  if (provider === "github" && typeof profile === "object" && profile && "id" in profile) {
+    return (profile as any).id;
+  }
+  if (provider === "google" && typeof profile === "object" && profile && "sub" in profile) {
+    return (profile as any).sub;
+  }
+  return undefined;
+}

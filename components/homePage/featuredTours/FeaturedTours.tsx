@@ -1,6 +1,7 @@
 import { fetchTours } from '@/lib/data';
 import TourCard from './TourCard';
 import SectionHeadings from '@/components/helper/sectionHeadings';
+import Link from 'next/link';
 
 export default async function FeaturedTours() {
   const { tours } = await fetchTours({page:1, pageSize:3});
@@ -30,7 +31,7 @@ of cultural attributes. '
   }
 
   return (
-    <section id="featured-tours" className="py-12 px-4 md:px-8">
+    <section id="featured-tours" className="py-12 px-4 md:px-8 bg-white-500">
       <div className='pt-6 pb-6'>
       <SectionHeadings
         heading='Pedal Safari 2026 Event'
@@ -55,7 +56,7 @@ of cultural attributes. '
         ))}
       </div>
       <div className="text-center mt-8">
-        <a href="/tours" className="text-blue-600 hover:underline">View All Tours</a>
+        <Link href="/tours" className="text-blue-600 hover:underline">View All Tours</Link>
       </div>
     </section>
   );

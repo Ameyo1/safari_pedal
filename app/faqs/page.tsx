@@ -19,12 +19,12 @@ const FAQ = () => {
       {faqs.map((item: FaqItem) => (
         <Accordion key={item.id} defaultExpanded>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography className="text-lg font-semibold ">
+            <Typography className="text-2xl font-bold ">
               {item.question}
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>{item.answer}</Typography>
+            <Typography className="text-lg">{item.answer}</Typography>
           </AccordionDetails>
         </Accordion>
       ))}

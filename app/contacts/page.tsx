@@ -1,11 +1,11 @@
 export default function ContactPage() {
   return (
-    <section className="min-h-screen bg-gray-200 py-12 px-4 md:px-8">
-      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow p-8">
+    <section className="min-h-screen bg-gray-300 py-12 px-4 md:px-8">
+      <div className="max-w-4xl mx-auto bg-gray-100 rounded-lg shadow p-8">
         <h1 className="text-3xl font-bold mb-6 text-center">Contact Us</h1>
 
         {/* Contact Info */}
-        <div className="mb-8 space-y-4 text-gray-700">
+        <div className="mb-8 text-lg space-y-4 text-gray-900">
           <p><strong>Email:</strong> info@pedalsafari.com</p>
           <p><strong>Phone:</strong> +256 712 345 678</p>
           <p><strong>Location:</strong> Kampala, Uganda</p>
@@ -15,7 +15,7 @@ export default function ContactPage() {
         <form
   action="https://formspree.io/f/xdkdjnjz"
   method="POST"
-  className="space-y-6"
+  className="space-y-6 bg-gray-50 p-6 rounded-lg shadow-md"
 >
     <input type="text" name="_gotcha" style={{ display: 'none' }} />
 

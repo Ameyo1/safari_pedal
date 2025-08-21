@@ -23,7 +23,7 @@ export default function TestimonialsSlider() {
   }, [emblaApi]);
 
   return (
-    <section className="py-12 px-4 md:px-8 bg-white">
+    <section className="py-12 px-4 md:px-8 bg-white-500">
       <h2 className="text-3xl font-bold mb-8 text-center">What Travelers Say</h2>
       <div className="embla" ref={emblaRef}>
         <div className="embla__container">

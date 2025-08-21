@@ -1,124 +1,109 @@
-// /app/api/book/route.ts
-import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { z } from 'zod';
-import { logEvent } from '@/lib/data';
+import { NextResponse, type NextRequest } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { z } from "zod";
+import { logEvent } from "@/lib/data";
+import { requirePolicies } from "@/lib/requirePolicies";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/auth";
 
 const BookingSchema = z.object({
-  tourId: z.string().min(1),
-  name: z.string().min(1),
-  email: z.string().email(),
-  phone: z.string().min(1),
-  travelers: z.number().min(1),
-  startDate: z.string().refine((val) => !isNaN(Date.parse(val)), {
-    message: 'Invalid start date',
-  }),
-  endDate: z.string().refine((val) => !isNaN(Date.parse(val)), {
-    message: 'Invalid end date',
-  }),
+  tourId: z.string().min(1, "Tour ID is required"),
+  phone: z.string().optional(),
+  travelers: z.coerce.number().int().positive("At least one traveler is required"),
+  startDate: z.string().datetime({ offset: true }),
+  endDate: z.string().datetime({ offset: true }),
   notes: z.string().optional(),
-});
+}).refine(
+  (data) => Date.parse(data.endDate) >= Date.parse(data.startDate),
+  { message: "End date must be after start date", path: ["endDate"] }
+);
 
 export async function GET() {
-  return NextResponse.json({ message: 'API is alive' });
+  return NextResponse.json({ success: true, message: "Booking API is alive" });
 }
 
-
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
-    const raw = await req.json();
-    const result = BookingSchema.safeParse(raw);
+    const session = await getServerSession(authOptions);
+    if (!session?.user?.email) {
+      return NextResponse.json({ success: false, error: "Not authenticated" }, { status: 401 });
+    }
 
-    if (!result.success) {
+    const participant = await prisma.user.findUnique({
+      where: { email: session.user.email },
+    });
+    if (!participant) {
+      return NextResponse.json({ success: false, error: "User not registered" }, { status: 403 });
+    }
+
+    const raw = await req.json();
+    const parsed = BookingSchema.safeParse(raw);
+    if (!parsed.success) {
       return NextResponse.json(
-        { error: 'Validation failed', details: result.error.flatten().fieldErrors },
+        { success: false, error: "Validation failed", details: parsed.error.flatten().fieldErrors },
         { status: 400 }
       );
     }
 
-    const { tourId, name, email, phone, travelers, startDate, endDate, notes } = result.data;
+    const { tourId, phone, travelers, startDate, endDate, notes } = parsed.data;
 
-    // 🔐 Check if participant is registered
-    const participant = await prisma.user.findFirst({
-      where: { email },
-    });
-
-    if (!participant) {
+    const redirectPolicy = await requirePolicies(participant.id);
+    if (redirectPolicy) {
       return NextResponse.json(
-        { error: 'Participant not registered. Please complete registration first.' },
+        { success: false, code: "POLICIES_INCOMPLETE", redirectUrl: redirectPolicy.url },
         { status: 403 }
       );
     }
 
-    // 🧭 Optional: Validate tour exists
-    const tour = await prisma.tourEvent.findUnique({
-      where: { id: tourId },
-    });
-
+    const tour = await prisma.tourEvent.findUnique({ where: { id: tourId } });
     if (!tour) {
-      return NextResponse.json({ error: 'Selected tour does not exist.' }, { status: 404 });
+      return NextResponse.json({ success: false, error: "Tour not found" }, { status: 404 });
     }
 
-    // 📝 Create booking
+    // Stronger duplicate check (any booking overlapping same tour & user)
+    const overlapping = await prisma.booking.findFirst({
+      where: {
+        userId: participant.id,
+        tourId,
+        OR: [
+          { startDate: { lte: new Date(endDate) }, endDate: { gte: new Date(startDate) } },
+        ],
+      },
+    });
+    if (overlapping) {
+      return NextResponse.json(
+        { success: false, error: "Booking already exists", bookingId: overlapping.id },
+        { status: 409 }
+      );
+    }
+
     const booking = await prisma.booking.create({
       data: {
         tourId,
         userId: participant.id,
-        email,
+        email: participant.email,
         phone,
         travelers,
-        startDate: new Date(startDate),
+        startDate: new Date(startDate), // normalize UTC
         endDate: new Date(endDate),
         notes,
-        status: 'pending',
-        createdAt: new Date(),
+        status: "pending",
       },
     });
 
     await prisma.eventLog.create({
-  data: {
-    type: 'booking',
-    userId: participant.id,
-    metadata: {
-      tourId,
-      travelers,
-      startDate,
-      endDate,
-      notes,
-    },
-  },
-});
-await logEvent({
-  type: "booking_created",
-  userId: participant.id,
-  metadata: {
-    bookingId: booking.id,
-  },
-});
+      data: {
+        type: "booking",
+        userId: participant.id,
+        metadata: { tour: tour.title, travelers, startDate, endDate, notes },
+      },
+    });
 
-
-    // 📧 Send confirmation via Formspree
-    const formspreeEndpoint = 'https://formspree.io/f/xdkdjnjz'; // Replace with your actual ID
-
-    try {
-      await fetch(formspreeEndpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name,
-          email,
-          message: `Hi ${name}, your booking for ${tour.title} from ${startDate} to ${endDate} has been received. We’ll be in touch soon!`,
-        }),
-      });
-    } catch (emailErr) {
-      console.warn('Formspree email failed:', emailErr);
-      // Booking still succeeds even if email fails
-    }
+    await logEvent({ type: "booking_created", userId: participant.id, metadata: { bookingId: booking.id } });
 
     return NextResponse.json({ success: true, booking }, { status: 200 });
   } catch (err) {
-    console.error('Booking error:', err);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error("Booking API error:", err);
+    return NextResponse.json({ success: false, error: "Internal server error" }, { status: 500 });
   }
 }
-

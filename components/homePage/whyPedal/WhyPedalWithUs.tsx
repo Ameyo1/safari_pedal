@@ -1,5 +1,6 @@
 export default function WhyPedalWithUs() {
   const valueProps = [
+    
     {
       title: 'Local Expertise',
       description: 'Our guides are born and raised in the regions they explore, offering unmatched insight and authenticity.',
@@ -27,10 +28,10 @@ export default function WhyPedalWithUs() {
       <h2 className="text-3xl font-bold mb-8 text-center">Why Safari With Us</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {valueProps.map((prop) => (
-          <div key={prop.title} className="bg-white p-6 rounded-lg shadow hover:shadow-md transition">
+          <div key={prop.title} className="bg-white-500 p-6 rounded-lg shadow hover:shadow-md transition">
             <div className="text-4xl mb-4">{prop.icon}</div>
             <h3 className="text-xl font-semibold mb-2">{prop.title}</h3>
-            <p className="text-sm text-gray-700">{prop.description}</p>
+            <p className="text-lg text-gray-900">{prop.description}</p>
           </div>
         ))}
       </div>
