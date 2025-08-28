@@ -24,13 +24,14 @@ import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import { format } from 'date-fns';
+import AdminLayout from '@/components/dashboard/AdminLayout';
 
 export default async function SubmissionsPage() {
   // 1️⃣ Check session and role
-  const session = await getServerSession();
-  if (!session?.user || session.user.role !== 'admin') {
-    redirect('/'); // Non-admins get redirected
-  }
+  // const session = await getServerSession();
+  // if (!session?.user || session.user.role !== 'admin') {
+  //   redirect('/'); // Non-admins get redirected
+  // }
 
   // 2️⃣ Fetch all submissions with related forms
   const submissions = await prisma.submission.findMany({
@@ -44,6 +45,7 @@ export default async function SubmissionsPage() {
   });
 
   return (
+    <AdminLayout>
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Submissions</h1>
 
@@ -82,5 +84,6 @@ export default async function SubmissionsPage() {
         </table>
       )}
     </div>
+  </AdminLayout>
   );
 }

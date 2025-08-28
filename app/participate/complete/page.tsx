@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Fullscreen } from 'lucide-react';
+import FullscreenLoader from '@/components/helper/FullScreenLoader';
 
 export default function CompletePage() {
   const router = useRouter();
@@ -40,7 +42,8 @@ export default function CompletePage() {
 
   return (
     <div className="p-8 text-center">
-      {loading ? (
+      <FullscreenLoader />
+      {/* {loading ? (
         <p className="text-gray-600">Verifying your participation status...</p>
       ) : error ? (
         <p className="text-red-600">Error: {error}</p>
@@ -49,7 +52,7 @@ export default function CompletePage() {
           <h1 className="text-2xl font-bold text-green-700 mb-4">You’re all set!</h1>
           <p className="text-gray-600">Redirecting you to the booking page...</p>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

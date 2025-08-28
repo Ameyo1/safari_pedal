@@ -24,12 +24,12 @@ export default function AuthArea() {
   if (session?.user) {
     return (
       <div className="flex items-center space-x-4">
-        <button
+        {/* <button
           onClick={() => signOut({ callbackUrl: '/' })}
-          className="text-white text-base font-medium"
+          className="text-blue-400 text-base font-medium"
         >
           Sign out
-        </button>
+        </button> */}
         <Link href={`/user-profile`}>
           <div className="flex items-center cursor-pointer">
             <Image
@@ -39,7 +39,7 @@ export default function AuthArea() {
               height={32}
               className="rounded-full"
             />
-            <span className="ml-2 text-white">{session.user.name}</span>
+            <span className="ml-2 text-black dark:text-blue-300">{session.user.name}</span>
           </div>
         </Link>
       </div>
@@ -51,13 +51,13 @@ export default function AuthArea() {
     <div className="flex items-center space-x-4">
       <Link
         href="/signin"
-        className="bg-yellow-300 text-black px-4 py-2 rounded-md hover:bg-yellow-400 transition"
+        className="bg-yellow-300 text-black px-4 py-2 rounded-md hover:pointer hover:bg-yellow-400 transition"
       >
         Login
       </Link>
       <Link
         href="/signup"
-        className="bg-green-400 text-white px-6 py-2 rounded hover:bg-green-700 transition"
+        className="bg-green-400 text-black px-6 py-2 rounded hover:pointer hover:bg-green-700 transition"
       >
         Sign Up
       </Link>

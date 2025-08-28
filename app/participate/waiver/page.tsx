@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import CompletionTracker from '@/components/CompletionTracker';
 import { useSession } from 'next-auth/react';
+import LoadingSpinner from '@/components/helper/loadingSpinner';
 
 export default function WaiverPage() {
   const router = useRouter();
@@ -120,7 +121,7 @@ export default function WaiverPage() {
     setSubmitting(false);
   };
 
-  if (status === 'loading' || loading) return <p>Loading…</p>;
+  if (status === 'loading' || loading) return <LoadingSpinner />;
   if (!session) return <p className="text-red-600">You must be logged in to continue.</p>;
 
   return (

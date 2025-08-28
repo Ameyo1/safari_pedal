@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import Nav from './Nav'
 import MobileNavbar from './MobileNav';
+import Header from '../helper/header';
 
 const ResponsiveNav = () => {
   // State to control the visibility of the mobile navigation
@@ -16,8 +17,9 @@ const ResponsiveNav = () => {
   };
   return (
     <div>
-      <Nav openNav ={toggleNav}/>
-      <MobileNavbar showNav ={showNav} closeNav ={closeNav}/>
+      <Header />
+      <Nav openNav={toggleNav} />
+      <MobileNavbar showNav={showNav} closeNav={closeNav} />
     </div>
   )
 }

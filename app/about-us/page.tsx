@@ -5,11 +5,11 @@ import React from "react";
 
 const AboutUs: React.FC = () => {
   return (
-    <section className="bg-white-500 text-gray-900 px-6 py-12 md:px-16 lg:px-24">
+    <section className="bg-white-500 text-gray-900 px-6 py-12 md:px-16 lg:px-24 dark:bg-gray-800 dark:text-gray-100">
       <div className="max-w-5xl mx-auto space-y-12">
         {/* Header */}
-        <header className="text-center mt-12 bg-gray-50 p-6 rounded-lg shadow-md">
-          <h1 className="text-4xl font-bold mb-2">About Pedal Safari</h1>
+        <header className="text-center mt-16 bg-gray-50 p-6 rounded-lg shadow-md">
+          <h1 className="text-4xl font-bold mb-2 dark:text-green-500">About Pedal Safari</h1>
           <p className="text-lg italic text-green-700">Travel In Sync with Nature©</p>
         </header>
 
@@ -66,7 +66,7 @@ travellers to different geographical regions in Africa.
             description="Our goals reflect our commitment to sustainable and responsible travel."
             
           />
-          <ul className="list-disc list-inside space-y-2 text-gray-900 text-lg mt-2">
+          <ul className="list-disc list-inside space-y-2 text-gray-900 text-lg mt-2 dark:text-gray-100">
             <li>Support education in host communities</li>
             <li>Promote forestation and conservation</li>
             <li>Encourage sustainable tourism practices</li>

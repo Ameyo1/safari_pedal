@@ -47,10 +47,10 @@ export default async function HomePage() {
       <FeaturedTours />
       <EventCategories />
       {/* Interactive Map */}
-      <section>
+      <Link href="/regions" className="block text-center">
         <h2 className="text-2xl font-semibold mb-6">Explore by Region</h2>
         {/* <MapEmbed />  */}
-      </section>
+      </Link>
 
       {/* Why Choose Us */}
       <WhyPedalWithUs />

@@ -1,11 +1,11 @@
 export default function ContactPage() {
   return (
-    <section className="min-h-screen bg-gray-300 py-12 px-4 md:px-8">
-      <div className="max-w-4xl mx-auto bg-gray-100 rounded-lg shadow p-8">
-        <h1 className="text-3xl font-bold mb-6 text-center">Contact Us</h1>
+    <section className="min-h-screen bg-gray-300 py-12 px-4 md:px-8 lg:px-16 dark:bg-gray-900">
+      <div className="max-w-4xl mx-auto bg-gray-100 rounded-lg shadow p-8 dark:bg-gray-800 dark:text-gray-100">
+        <h1 className="text-3xl font-bold mb-6 mt-8 text-center dark:text-gray-100">Contact Us</h1>
 
         {/* Contact Info */}
-        <div className="mb-8 text-lg space-y-4 text-gray-900">
+        <div className="mb-8 text-lg space-y-4 text-gray-900 dark:text-gray-100">
           <p><strong>Email:</strong> info@pedalsafari.com</p>
           <p><strong>Phone:</strong> +256 712 345 678</p>
           <p><strong>Location:</strong> Kampala, Uganda</p>
@@ -15,12 +15,12 @@ export default function ContactPage() {
         <form
   action="https://formspree.io/f/xdkdjnjz"
   method="POST"
-  className="space-y-6 bg-gray-50 p-6 rounded-lg shadow-md"
+  className="space-y-6 bg-gray-50 p-6 rounded-lg shadow-md dark:bg-gray-700 dark:text-gray-100"
 >
     <input type="text" name="_gotcha" style={{ display: 'none' }} />
 
   <div>
-    <label htmlFor="name" className="block text-sm font-medium text-gray-600">Name</label>
+    <label htmlFor="name" className="block text-sm font-medium text-gray-600 dark:text-gray-100">Name</label>
     <input
       type="text"
       name="name"
@@ -31,7 +31,7 @@ export default function ContactPage() {
   </div>
 
   <div>
-    <label htmlFor="email" className="block text-sm font-medium text-gray-600">Email</label>
+    <label htmlFor="email" className="block text-sm font-medium text-gray-600 dark:text-gray-100">Email</label>
     <input
       type="email"
       name="email"
@@ -42,7 +42,7 @@ export default function ContactPage() {
   </div>
 
   <div>
-    <label htmlFor="message" className="block text-sm font-medium text-gray-600">Message</label>
+    <label htmlFor="message" className="block text-sm font-medium text-gray-600 dark:text-gray-100">Message</label>
     <textarea
       name="message"
       id="message"

@@ -1,9 +1,23 @@
 // /api/submissions/route.ts
 import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
+import { getServerSession } from "next-auth";
+import { authOptions } from '@/auth';
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
+    // 🔐 1. Get session
+    const session = await getServerSession(authOptions);
+
+    // 🔐 2. Reject if not admin
+    if (!session?.user || session.user.role !== "admin") {
+      return NextResponse.json(
+        { error: "Forbidden" },
+        { status: 403 }
+      );
+    }
+
+    // ✅ 3. Fetch submissions only for admins
     const submissions = await prisma.submission.findMany({
       include: {
         medical: true,
@@ -11,10 +25,9 @@ export async function GET() {
         waiver: true,
         registration: true,
       },
-      orderBy: { createdAt: 'desc' },
+      orderBy: { createdAt: "desc" },
     });
 
-    // Ensure a consistent structure
     const formatted = submissions.map((s) => ({
       id: s.id,
       tourId: s.tourId,
@@ -30,7 +43,7 @@ export async function GET() {
 
     return NextResponse.json({ submissions: formatted });
   } catch (err) {
-    console.error('Error fetching submissions:', err);
-    return NextResponse.json({ submissions: [] }, { status: 500 });
+    console.error("Error fetching submissions:", err);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

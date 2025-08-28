@@ -34,6 +34,6 @@ export const navLinks = [
   { 
     id: 7,
     name: "Dashboard",
-    url: "/dashboard/submissions",
+    url: "/dashboard",
   },
 ]

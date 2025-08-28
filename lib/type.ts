@@ -1,5 +1,6 @@
 // types.ts
 import { Prisma } from '@prisma/client';
+import { ReactNode } from 'react';
 
 export type FullTour = Prisma.TourEventGetPayload<{
   include: {
@@ -79,4 +80,16 @@ export type TeamMember = {
   bio?: string
   avatarUrl?: string
   languages?: string[]
+}
+
+export interface AvatarProps {
+  children: ReactNode;
+  className?: string;
+}
+export interface AvatarImageProps {
+  src?: string; // make optional
+  alt?: string;
+}
+export interface AvatarFallbackProps {
+  children: ReactNode;
 }

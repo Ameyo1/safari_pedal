@@ -1,18 +1,21 @@
-// app/dashboard/page.tsx
+import { authOptions } from "@/auth";
 import AdminLayout from "@/components/dashboard/AdminLayout";
 import { prisma } from "@/lib/prisma";
+import { getServerSession } from "next-auth";
+import { NextResponse } from "next/server";
 
-export default async function DashboardPage() {
+export default async function Logs() {
+
   const users = await prisma.user.findMany({
     include: { loginEvent: true }
   });
 
   return (
     <AdminLayout>
-    <div className="p-6 space-y-6 bg-white">
+    <div className="p-6 space-y-6 bg-white dark:bg-gray-800">
      
 
-      <section className="bg-gray-100 p-4 rounded mt-6">
+      <section className="bg-gray-100 p-4 rounded mt-6 dark:bg-gray-700">
         <h2 className="text-xl font-semibold">User Overview</h2>
         <table className="w-full border mt-4">
           <thead>

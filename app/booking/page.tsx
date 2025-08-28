@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import BookingForm from '@/components/booking/BookingForm';
+import LoadingSpinner from '@/components/helper/loadingSpinner';
+import FullscreenLoader from '@/components/helper/FullScreenLoader';
 
 export default function BookingPage() {
   const router = useRouter();
@@ -47,7 +49,7 @@ export default function BookingPage() {
     checkCompletion();
   }, [session, status, router]);
 
-  if (status === 'loading' || loading) return <p>Loading...</p>;
+  if (status === 'loading' || loading) return <FullscreenLoader />;
   if (!isEligible) return <p>Redirecting...</p>;
 
   return (

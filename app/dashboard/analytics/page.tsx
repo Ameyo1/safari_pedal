@@ -1,7 +1,12 @@
 'use client';
 
+import AdminLayout from '@/components/dashboard/AdminLayout';
+import FullscreenLoader from '@/components/helper/FullScreenLoader';
 import { useEffect, useState } from 'react';
-import { FaClipboardList, FaUserCheck, FaFileMedical, FaFileContract, FaRegAddressCard } from 'react-icons/fa';
+import { 
+  FaClipboardList, FaUserCheck, FaFileMedical, 
+  FaFileContract, FaRegAddressCard, FaCheckCircle 
+} from 'react-icons/fa';
 
 interface Analytics {
   total: number;
@@ -9,6 +14,7 @@ interface Analytics {
   withPolicy: number;
   withWaiver: number;
   withRegistration: number;
+  withAll: number;
 }
 
 interface Submission {
@@ -23,7 +29,8 @@ interface Submission {
   createdAt: string;
 }
 
-export default function DashboardPage() {
+export default function AnalyticsPage() {
+  
   const [analytics, setAnalytics] = useState<Analytics | null>(null);
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [loading, setLoading] = useState(true);
@@ -31,11 +38,9 @@ export default function DashboardPage() {
   useEffect(() => {
     Promise.all([
       fetch('/api/analytics').then(res => res.json()),
-      fetch('/api/submissions').then(res => res.json()),
     ])
-      .then(([analyticsData, submissionsData]) => {
+      .then(([analyticsData]) => {
         setAnalytics(analyticsData);
-        setSubmissions(submissionsData.submissions || []);
         setLoading(false);
       })
       .catch(err => {
@@ -44,36 +49,38 @@ export default function DashboardPage() {
       });
   }, []);
 
-  if (loading) return <p className="text-center mt-10">Loading dashboard...</p>;
+  if (loading) return <FullscreenLoader />;
   if (!analytics) return <p className="text-center mt-10 text-red-600">Failed to load analytics.</p>;
 
-  const { total, withMedical, withPolicy, withWaiver, withRegistration } = analytics;
+  const { total, withMedical, withPolicy, withWaiver, withRegistration, withAll } = analytics;
 
   const calcPercent = (count: number) => total ? Math.round((count / total) * 100) : 0;
 
   return (
-    <div className="p-6 space-y-6">
-      <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
+    <AdminLayout>
+      <h1 className="text-3xl font-bold mb-6 ">Admin Dashboard</h1>
 
-      {/* Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+      {/* ✅ Summary Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 dark:bg-gray-800 p-4 rounded-lg">
         <StatCard title="Total Submissions" count={total} icon={<FaClipboardList />} color="bg-blue-500" />
         <StatCard title="Medical Forms" count={withMedical} percent={calcPercent(withMedical)} icon={<FaFileMedical />} color="bg-green-500" />
         <StatCard title="Policy Agreements" count={withPolicy} percent={calcPercent(withPolicy)} icon={<FaFileContract />} color="bg-yellow-500" />
         <StatCard title="Waivers" count={withWaiver} percent={calcPercent(withWaiver)} icon={<FaUserCheck />} color="bg-rose-500" />
         <StatCard title="Registrations" count={withRegistration} percent={calcPercent(withRegistration)} icon={<FaRegAddressCard />} color="bg-indigo-500" />
+        <StatCard title="Fully Completed" count={withAll} percent={calcPercent(withAll)} icon={<FaCheckCircle />} color="bg-purple-500" />
       </div>
 
-      {/* Progress Bars */}
-      <div className="mt-8 space-y-4">
+      {/* ✅ Progress Bars */}
+      <div className="mt-8 space-y-4 dark:bg-gray-800 text-white p-4 rounded-lg">
         <h2 className="text-xl font-semibold">Completion Progress</h2>
-        <ProgressBar label="Medical Forms" value={calcPercent(withMedical)} color="bg-green-500" />
+        <ProgressBar label="Medical Forms" value={calcPercent(withMedical)} color="bg-green-500 " />
         <ProgressBar label="Policy Agreements" value={calcPercent(withPolicy)} color="bg-yellow-500" />
         <ProgressBar label="Waivers" value={calcPercent(withWaiver)} color="bg-rose-500" />
         <ProgressBar label="Registrations" value={calcPercent(withRegistration)} color="bg-indigo-500" />
+        <ProgressBar label="Fully Completed" value={calcPercent(withAll)} color="bg-purple-500" />
       </div>
 
-      {/* Submissions Table */}
+      {/* Submissions Table stays same */}
       <div className="mt-8">
         <h2 className="text-xl font-semibold mb-4">Submissions</h2>
         <div className="overflow-x-auto">
@@ -107,7 +114,7 @@ export default function DashboardPage() {
           </table>
         </div>
       </div>
-    </div>
+    </AdminLayout>
   );
 }
 

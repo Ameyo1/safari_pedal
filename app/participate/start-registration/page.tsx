@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Fullscreen } from 'lucide-react';
+import FullscreenLoader from '@/components/helper/FullScreenLoader';
 
 export default function StartRegistration() {
   const router = useRouter();
@@ -46,13 +48,14 @@ export default function StartRegistration() {
 
   return (
     <div className="p-6 text-center">
-      {loading ? (
+      <FullscreenLoader />
+      {/* {loading ? (
         <p className="text-gray-600">Checking your progress...</p>
       ) : error ? (
         <p className="text-red-600">Error: {error}</p>
       ) : (
         <p className="text-gray-600">Redirecting...</p>
-      )}
+      )} */}
     </div>
   );
 }

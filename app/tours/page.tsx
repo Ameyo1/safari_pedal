@@ -7,7 +7,7 @@ export default async function ToursPage() {
   const { tours } = await fetchTours({ page: 1, pageSize: 20 });
 
   return (
-    <Section bg="white" id="tours" className="py-12 mt-8">
+    <Section bg="white" id="tours" className="py-12 mt-8 dark:bg-gray-800">
       <h1 className="text-3xl font-bold mb-8 text-center">
         Explore Our Tours & Events
       </h1>

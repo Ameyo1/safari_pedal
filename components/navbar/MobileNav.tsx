@@ -53,23 +53,23 @@ const MobileNavbar = ({ showNav, closeNav }: Props) => {
         aria-modal="true"
         ref={menuRef}
         tabIndex={-1}
-        className={`fixed top-0 left-0 h-full w-[80%] sm:w-[60%] bg-rose-100 transform duration-300 ${
+        className={`fixed top-0 left-0 h-full w-[80%] sm:w-[60%] bg-rose-400 transform duration-300 ${
           showNav ? "translate-x-0" : "-translate-x-full"
-        } z-[1000] p-6 flex flex-col items-center justify-center space-y-6`}
+        } z-[1000] p-6 space-y-10`}
       >
         <button
           aria-label="Close menu"
           onClick={closeNav}
-          className="absolute top-4 right-8 text-white text-2xl sm:text-3xl"
+          className="absolute top-4 right-8 text-black text-2xl sm:text-3xl"
         >
           <CgClose />
         </button>
-        <nav>
+        <nav className="flex flex-col space-y-6 text-center">
           {navLinks.map((link) => (
             <Link
               key={link.id}
               href={link.url}
-              className="text-white text-[20px] sm:text-[30px] font-medium hover:text-yellow-300 transition"
+              className="text-black text-[20px] sm:text-[30px] font-medium hover:text-yellow-300 transition"
             >
               {link.name}
             </Link>

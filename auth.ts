@@ -224,29 +224,37 @@ export const authOptions: AuthOptions = {
     },
 
     async jwt({ token, user }) {
-      if (user) token.id = user.id
-      if (token.id) {
-        const dbUser = await prisma.user.findUnique({ where: { id: token.id as string } });
-        if (dbUser) {
-          token.email = dbUser.email;
-          token.name = dbUser.name ?? "";
-          token.coverImage = dbUser.coverImage ?? "";
-          token.role = dbUser.role ?? "";
-        }
-      }
-      return token;
-    },
+  // when user first signs in
+  if (user) token.id = user.id;
 
-    async session({ session, token }) {
-      
-      if (token.id) {
-        session.user.id = token.id as string;
-        session.user.email = token.email ?? "";
-        session.user.name = token.name ?? "";
-      }
-      return session;
-    },
+  // every time afterwards
+  if (token.id) {
+    const dbUser = await prisma.user.findUnique({
+      where: { id: token.id as string },
+    });
+
+    if (dbUser) {
+      token.email = dbUser.email;
+      token.name = dbUser.name ?? "";
+      token.coverImage = dbUser.coverImage ?? "";
+      token.role = dbUser.role ?? "user"; // ✅ persist role in token
+    }
+  }
+
+  return token;
+},
+
+async session({ session, token }) {
+  if (token.id) {
+    session.user.id = token.id as string;
+    session.user.email = token.email ?? "";
+    session.user.name = token.name ?? "";
+    session.user.role = token.role as string; // ✅ expose role to session
+    session.user.coverImage = (token as any).coverImage ?? "";
+  }
+  return session;
+},
   },
-};
-
+}; 
+  
 export default NextAuth(authOptions);

@@ -1,22 +1,25 @@
 import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
+import { authOptions } from '@/auth';
+import { authorize, getSession } from '@/lib/authHook';
+import { redirect } from 'next/navigation';
 
 export async function GET(req: Request) {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
   if (!session?.user || session.user.role !== 'admin') {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
   }
-
+ 
   try {
     const [
       total,
-      medicalCompleted,
-      policyCompleted,
-      waiverCompleted,
-      registrationCompleted,
-      allCompleted,
+      withMedical,
+      withPolicy,
+      withWaiver,
+      withRegistration,
+      withAll,
     ] = await Promise.all([
       prisma.submission.count(),
       prisma.submission.count({ where: { medicalId: { not: null } } }),
@@ -37,11 +40,11 @@ export async function GET(req: Request) {
 
     return NextResponse.json({
       total,
-      medicalCompleted,
-      policyCompleted,
-      waiverCompleted,
-      registrationCompleted,
-      allCompleted,
+      withMedical,
+      withPolicy,
+      withWaiver,
+      withRegistration,
+      withAll,
     });
   } catch (err) {
     console.error('Error fetching analytics:', err);

@@ -96,7 +96,7 @@ export default function BookingForm({ user }: BookingFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-6 max-w-xl mx-auto p-6 mt-20 bg-white rounded shadow"
+      className="space-y-6 max-w-xl mx-auto p-6 mt-20 bg-white rounded shadow dark:bg-gray-800"
     >
       <h2 className="text-xl font-semibold">Book Your Safari</h2>
 
@@ -107,8 +107,8 @@ export default function BookingForm({ user }: BookingFormProps) {
 
       <TourDropdown value={form.tourId} onChange={handleChange} />
 
-      <input value={user.name} disabled className="w-full p-2 border rounded bg-gray-100" />
-      <input value={user.email} disabled className="w-full p-2 border rounded bg-gray-100" />
+      <input value={user.name} disabled className="w-full p-2 border rounded bg-gray-100 dark:bg-gray-700" />
+      <input value={user.email} disabled className="w-full p-2 border rounded bg-gray-100 dark:bg-gray-700" />
 
       <input
         name="phone"

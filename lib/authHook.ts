@@ -3,6 +3,8 @@
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/auth';
 
 export function useAuth() {
   const router = useRouter();
@@ -51,4 +53,15 @@ export function useAuth() {
   };
 
   return { pending, error, registerAndLogin, login };
+}
+
+
+export async function getSession() {
+  return await getServerSession(authOptions);
+}
+
+export function authorize(roles: string[], userRole?: string) {
+  if (!userRole || !roles.includes(userRole)) {
+    throw new Error("Unauthorized");
+  }
 }

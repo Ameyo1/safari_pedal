@@ -19,8 +19,8 @@ export default async function TourDetailPage({ params }: PageProps) {
     <>
       {/* Tour Overview */}
       
-        <h1 className="text-4xl text-center font-bold mb-4 mt-22">{tour.title}</h1>
-      <Section bg="white" className="py-8 flex flex-col">
+        <h1 className="text-4xl text-center font-bold mb-4 mt-28">{tour.title}</h1>
+      <Section bg="white" className="py-8 flex flex-col dark:bg-gray-800">
         <div className="flex justify-center mr-4">
           <Image
             src={tour.featuredImage || "/images/h3.jpg"}
@@ -33,12 +33,12 @@ export default async function TourDetailPage({ params }: PageProps) {
           />
 
          <div className="ml-16 flex flex-col">
-            <h2 className="text-2xl font-semibold mb-4">Overview</h2>
-            <p className="text-gray-700 mb-6">{tour.itinerary}</p>
+            <h2 className="text-2xl font-semibold mb-4 dark:text-gray-200">Overview</h2>
+            <p className="text-gray-700 mb-6 dark:text-gray-300">{tour.itinerary}</p>
             {/* Booking CTA */}
       <div className="text-center my-8">
         <Link href='#destinations'>
-          <h4 className="mb-4"><span  className="text-blue-600 hover:underline">Check Destinations </span> within the event leg</h4>
+          <h4 className="mb-4"><span  className="text-blue-600 hover:pointer dark:text-blue-300">Check Destinations </span> within the event leg</h4>
         </Link>
         <Link
           href={`/booking?tourId=${tour.id}`}
@@ -52,22 +52,22 @@ export default async function TourDetailPage({ params }: PageProps) {
       </Section>
 
       {/* Destinations */}
-      <Section id="destinations" bg="gray">
-        <h2 className="text-2xl font-semibold mb-4">Destinations</h2>
+      <Section id="destinations" bg="gray" className="py-8 dark:bg-gray-700">
+        <h2 className="text-2xl font-semibold mb-4 dark:text-gray-200">Destinations</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {tour.destinations?.map((place) => (
             <div key={place.id} className="p-4 rounded bg-white shadow-sm">
-              <h3 className="font-bold">{place.name}</h3>
-              <p className="text-gray-600">{place.description}</p>
+              <h3 className="font-bold dark:text-gray-600">{place.name}</h3>
+              <p className="text-gray-600 dark:text-gray-500">{place.description}</p>
             </div>
           ))}
         </div>
       </Section>
 
       {/* Recommended Lodges */}
-      <Section id="recommended-lodges" bg="yellow">
-        <h2 className="text-2xl font-semibold mb-4">Recommended Lodges</h2>
-        <ul className="list-disc pl-6 text-gray-700">
+      <Section id="recommended-lodges" bg="yellow" className="py-8 dark:bg-gray-800">
+        <h2 className="text-2xl font-semibold mb-4 dark:text-gray-200">Recommended Lodges</h2>
+        <ul className="list-disc pl-6 text-gray-700 dark:text-gray-300">
           {tour.hotels?.map((hotel) => (
             <li key={hotel.id}>
               {hotel.name} — {hotel.region}

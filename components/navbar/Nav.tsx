@@ -13,14 +13,14 @@ export default function Nav({ openNav }: Props) {
   const scrolled = useScroll(90, 100);
 
   const containerClasses = `
-    fixed top-0 w-full z-[1000] transition-all duration-200
-    ${scrolled ? 'bg-blue-950 shadow-md' : 'bg-transparent'}
-    h-[12vh]
+    fixed top-0 w-full z-[1000] border-white border-b transition-all duration-200
+    ${scrolled ? 'bg-blue-950 shadow-md' : 'bg-white-400'}
+    h-[14vh]
   `;
 
   return (
     <nav className={containerClasses}>
-      <div className="flex justify-between items-center h-full w-[90%] mx-auto">
+      <div className="flex justify-between text-gray-800 items-center mx-auto h-full w-[90%] mt-6">
         <Logo />
         <DesktopLinks />
         <div className="flex items-center">

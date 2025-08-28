@@ -90,7 +90,24 @@ export async function POST(req: NextRequest) {
         status: "pending",
       },
     });
-
+// const submission = await prisma.submission.upsert({
+//       where: { userId },
+//       update: {
+//         tourId,
+//         participantName: name,
+//         email,
+//         phone,
+//         bookingId: booking.id,
+//       },
+//       create: {
+//         userId,
+//         tourId,
+//         participantName: name,
+//         email,
+//         phone,
+//         bookingId: booking.id,
+//       },
+//     });
     await prisma.eventLog.create({
       data: {
         type: "booking",

@@ -5,7 +5,7 @@ import { navLinks } from '../constant/constant';
 
 export default function DesktopLinks() {
   return (
-    <div className=" lg:flex items-center space-x-10">
+    <div className="hidden lg:flex items-center space-x-10">
       {navLinks.map(({ id, name, url }) => (
         <Link key={id} href={url}>
           <p
