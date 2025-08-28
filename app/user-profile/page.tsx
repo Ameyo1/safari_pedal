@@ -103,7 +103,7 @@ export default function ProfilePage() {
 
     setUploading(true);
     try {
-      const res = await fetch(`/api/profile/${userId}/upload-image`, {
+      const res = await fetch(`/api/profile/${userId}`, {
         method: 'POST',
         body: formData,
       });
