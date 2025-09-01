@@ -23,12 +23,12 @@ export default function TestimonialsSlider() {
   }, [emblaApi]);
 
   return (
-    <section className="py-12 px-4 md:px-8 bg-white-500">
-      <h2 className="text-3xl font-bold mb-8 text-center">What Travelers Say</h2>
+    <section className="py-12 px-4 md:px-8 bg-green-50-500">
+      <h2 className="text-3xl font-bold mb-8 text-center dark:text-gray-200">What Travelers Say</h2>
       <div className="embla" ref={emblaRef}>
         <div className="embla__container">
           {testimonials.map((t, idx) => (
-            <div className="embla__slide" key={idx}>
+            <div className="embla__slide dark:bg-gray-700 dark:text-gray-800" key={idx}>
               <div className="p-6 bg-gray-50 rounded-lg shadow text-center">
                 <p className="text-lg italic mb-4">“{t.quote}”</p>
                 <h3 className="font-semibold">{t.name}</h3>

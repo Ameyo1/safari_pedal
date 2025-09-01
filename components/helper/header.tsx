@@ -6,19 +6,20 @@ import Link from 'next/link';
 import { useScroll } from '../navbar/hooks/useScroll';
 
 export default function Header() {
-// const scrolled = useScroll(90, 100);
+const scrolled = useScroll(90, 100);
 
-//     const containerClasses = `
-//     fixed top-0 w-full z-[1000] transition-all duration-200
-//     ${scrolled ? 'bg-blue-950 shadow-md' : 'bg-blue-400'}
-//     h-[7vh]
-//   `;
+    const containerClasses = `
+    fixed top-0 w-full z-[1000] transition-all duration-200
+    ${scrolled ? 'bg-blue-850 shadow-md' : 'bg-blue-500'}
+    h-[7vh]
+  `;
   return (
-    <div className='hidden md:flex justify-between items-center bg-blue-400 h-[7vh]'>
-      {/* Left side: Contact info */}
-      <div className="flex items-center space-x-6 hover:pointer">
-        <span className="flex items-center space-x-4 ml-4 hover:pointer">
-          <MdEmail />
+    <header className={containerClasses}>
+      <div className='hidden md:flex justify-between items-center bg-blue-400 h-[7vh] text-white text-sm font-medium'>
+        {/* Left side: Contact info */}
+        <div className="flex items-center space-x-6 hover:pointer">
+          <span className="flex items-center space-x-4 ml-4 hover:pointer">
+            <MdEmail />
           <Link href="mailto:info@example.com" className="hover:pointer hover:text-yellow-300">mpyangu@outlook.com</Link>
         </span>
         <span className="flex items-center space-x-4">
@@ -46,5 +47,6 @@ export default function Header() {
         </Link>
       </div>
     </div>
+    </header>
   );
 }

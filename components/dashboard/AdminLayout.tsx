@@ -26,7 +26,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           ${isMobileOpen ? "translate-x-0" : "-translate-x-full"} 
           md:translate-x-0 
           ${isCollapsed ? "w-20" : "w-64"} 
-          fixed md:static top-0 left-0 h-full bg-white shadow-md dark:bg-gray-800 
+          fixed md:static top-0 left-0 h-full bg-green-50 shadow-md dark:bg-gray-800 
           transition-all duration-300 z-50 flex flex-col
         `}
       >
@@ -68,7 +68,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
         {/* Topbar */}
-        <header className="flex items-center justify-between p-4 bg-white shadow-md dark:bg-gray-800">
+        <header className="flex items-center justify-between p-4 bg-green-50 shadow-md dark:bg-gray-800">
           {/* Mobile toggle */}
           <button
             onClick={() => setIsMobileOpen(!isMobileOpen)}

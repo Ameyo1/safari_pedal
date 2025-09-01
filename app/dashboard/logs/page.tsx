@@ -12,7 +12,7 @@ export default async function Logs() {
 
   return (
     <AdminLayout>
-    <div className="p-6 space-y-6 bg-white dark:bg-gray-800">
+    <div className="p-6 space-y-6 bg-green-50 dark:bg-gray-800">
      
 
       <section className="bg-gray-100 p-4 rounded mt-6 dark:bg-gray-700">

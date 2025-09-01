@@ -109,14 +109,14 @@ export default function SignInForm() {
         <span className="text-center text-sm text-gray-500">Or sign in with</span>
         <button
           type="button"
-          className="w-full bg-white border border-gray-300 rounded px-4 py-2 flex items-center justify-center gap-2 hover:bg-gray-50"
+          className="w-full bg-green-50 border border-gray-300 rounded px-4 py-2 flex items-center justify-center gap-2 hover:bg-gray-50"
           onClick={() => handleOAuthSignIn("google")}
         >
           <FaGoogle className="text-red-500" /> Google
         </button>
         <button
           type="button"
-          className="w-full bg-white border border-gray-300 rounded px-4 py-2 flex items-center justify-center gap-2 hover:bg-gray-50"
+          className="w-full bg-green-50 border border-gray-300 rounded px-4 py-2 flex items-center justify-center gap-2 hover:bg-gray-50"
           onClick={() => handleOAuthSignIn("github")}
         >
           <FaGithub className="text-gray-800" /> GitHub

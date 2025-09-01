@@ -31,7 +31,7 @@ of cultural attributes. '
   }
 
   return (
-    <section id="featured-tours" className="py-12 px-4 md:px-8 bg-white-500">
+    <section id="featured-tours" className="py-12 px-4 md:px-8 bg-green-50-500">
       <div className='pt-6 pb-6'>
       <SectionHeadings
         heading='Pedal Safari 2026 Event'

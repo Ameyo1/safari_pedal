@@ -17,7 +17,7 @@ export default async function HomePage() {
   });
 
   return (
-    <main className="space-y-16 px-6 md:px-12">
+    <main className="space-y-16 px-6 md:px-12 dark:bg-gray-800 transition-colors duration-500 bg-green-50">
       {/* Hero Section */}
       <HeroBanner />
       <div className="pt-10 pb-4">

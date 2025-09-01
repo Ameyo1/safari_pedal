@@ -11,7 +11,7 @@ const SectionHeadings = ({heading, description}: Props) => {
   <h1 className="text-xl sm:text-3xl font-bold text-blue-950 dark:text-blue-200">
     {heading}
   </h1>
-  <p className="text-sm sm:text-lg font-work-sans mt-2 text-gray-700 dark:text-gray-300">
+  <p className="text-lg sm:text-lg font-work-sans mt-2 text-gray-900 dark:text-gray-100">
     {description}
   </p>
 </div>

@@ -5,7 +5,7 @@ import React from "react";
 
 const AboutUs: React.FC = () => {
   return (
-    <section className="bg-white-500 text-gray-900 px-6 py-12 md:px-16 lg:px-24 dark:bg-gray-800 dark:text-gray-100">
+    <section className="bg-green-50 text-gray-900 px-6 py-12 md:px-16 lg:px-24 dark:bg-gray-800 dark:text-gray-100">
       <div className="max-w-5xl mx-auto space-y-12">
         {/* Header */}
         <header className="text-center mt-16 bg-gray-50 p-6 rounded-lg shadow-md">

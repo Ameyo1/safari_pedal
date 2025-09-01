@@ -16,10 +16,10 @@ export default async function TourDetailPage({ params }: PageProps) {
   if (!tour) notFound();
 
   return (
-    <>
+    <div className="container mx-auto px-4 mt-20">
       {/* Tour Overview */}
       
-        <h1 className="text-4xl text-center font-bold mb-4 mt-28">{tour.title}</h1>
+        <h1 className="text-4xl text-center font-bold mb-4 mt-34">{tour.title}</h1>
       <Section bg="white" className="py-8 flex flex-col dark:bg-gray-800">
         <div className="flex justify-center mr-4">
           <Image
@@ -56,7 +56,7 @@ export default async function TourDetailPage({ params }: PageProps) {
         <h2 className="text-2xl font-semibold mb-4 dark:text-gray-200">Destinations</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {tour.destinations?.map((place) => (
-            <div key={place.id} className="p-4 rounded bg-white shadow-sm">
+            <div key={place.id} className="p-4 rounded bg-green-50 shadow-sm">
               <h3 className="font-bold dark:text-gray-600">{place.name}</h3>
               <p className="text-gray-600 dark:text-gray-500">{place.description}</p>
             </div>
@@ -77,6 +77,6 @@ export default async function TourDetailPage({ params }: PageProps) {
       </Section>
 
       
-    </>
+    </div>
   );
 }

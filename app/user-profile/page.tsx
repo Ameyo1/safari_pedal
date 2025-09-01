@@ -137,7 +137,7 @@ export default function ProfilePage() {
             {!userData.image && userData.name.charAt(0).toUpperCase()}
           </Avatar>
           <IconButton
-            className="absolute bottom-0 right-0 bg-white shadow"
+            className="absolute bottom-0 right-0 bg-green-50 shadow"
             onClick={() => fileInputRef.current?.click()}
             size="small"
           >

@@ -87,7 +87,7 @@ export default function EventCategories() {
       <h2 className="text-3xl font-bold mb-8 text-center">Pedal Safari Events Categories</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {categories.map((category) => (
-          <div key={category.title} className="bg-white-500 p-6 rounded-lg shadow hover:shadow-md transition">
+          <div key={category.title} className="bg-green-50-500 p-6 rounded-lg shadow hover:shadow-md transition">
             <Image
               src={category.image}
               alt={category.title}

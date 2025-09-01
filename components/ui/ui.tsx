@@ -8,7 +8,7 @@ interface CardProps {
   className?: string;
 }
 export function Card({ children, className }: CardProps) {
-  return <div className={`bg-white dark:bg-gray-800 rounded-lg shadow ${className}`}>{children}</div>;
+  return <div className={`bg-green-50 dark:bg-gray-800 rounded-lg shadow ${className}`}>{children}</div>;
 }
 
 interface CardContentProps {
@@ -53,7 +53,7 @@ export const Switch: FC<SwitchProps> = ({ checked, onCheckedChange }) => {
       className={`w-12 h-6 rounded-full p-1 transition-colors ${checked ? 'bg-green-500' : 'bg-gray-300'}`}
     >
       <div
-        className={`bg-white w-4 h-4 rounded-full transform duration-200 ${checked ? 'translate-x-6' : ''}`}
+        className={`bg-green-50 w-4 h-4 rounded-full transform duration-200 ${checked ? 'translate-x-6' : ''}`}
       />
     </button>
   );
@@ -189,7 +189,7 @@ interface SelectContentProps {
   children: ReactNode;
 }
 export const SelectContent: FC<SelectContentProps> = ({ children }) => (
-  <div className="mt-1 border border-gray-300 rounded-md bg-white dark:bg-gray-700 shadow-lg">{children}</div>
+  <div className="mt-1 border border-gray-300 rounded-md bg-green-50 dark:bg-gray-700 shadow-lg">{children}</div>
 );
 
 interface SelectItemProps {

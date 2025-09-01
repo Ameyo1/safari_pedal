@@ -96,7 +96,7 @@ export default function BookingForm({ user }: BookingFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-6 max-w-xl mx-auto p-6 mt-20 bg-white rounded shadow dark:bg-gray-800"
+      className="space-y-6 max-w-xl mx-auto p-6 mt-20 bg-green-50 rounded shadow dark:bg-gray-800"
     >
       <h2 className="text-xl font-semibold">Book Your Safari</h2>
 

@@ -84,7 +84,7 @@ export default function AnalyticsPage() {
       <div className="mt-8">
         <h2 className="text-xl font-semibold mb-4">Submissions</h2>
         <div className="overflow-x-auto">
-          <table className="min-w-full bg-white rounded shadow overflow-hidden">
+          <table className="min-w-full bg-green-50 rounded shadow overflow-hidden">
             <thead className="bg-gray-100">
               <tr>
                 <th className="px-4 py-2 text-left">Participant</th>
@@ -121,7 +121,7 @@ export default function AnalyticsPage() {
 // ✅ Summary Card Component
 function StatCard({ title, count, percent, icon, color }: any) {
   return (
-    <div className="p-4 bg-white rounded shadow flex items-center space-x-4">
+    <div className="p-4 bg-green rounded shadow flex items-center space-x-4">
       <div className={`p-3 rounded text-white ${color}`}>{icon}</div>
       <div>
         <p className="text-gray-500 text-sm">{title}</p>

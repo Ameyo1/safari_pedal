@@ -23,7 +23,7 @@ const Regions = () => {
               East Africa truly offers a rich tapestry of wildlife experiences for nature enthusiasts.
             </p>
           </section>
-          <section className="text-center py-8 px-4 mt-8 bg-white">
+          <section className="text-center py-8 px-4 mt-8 bg-green-50">
           <h2 className="text-2xl font-semibold mb-6">Explore by Region</h2>
           {/* Interactive Map or Regions List can be added here */}
           {/* <MapEmbed /> */}

@@ -88,7 +88,7 @@ export default function RegisterPage() {
   if (loading) return <LoadingSpinner />;
 
   return (
-    <section className="max-w-2xl mx-auto p-6 bg-white rounded shadow">
+    <section className="max-w-2xl mx-auto p-6 bg-green-50 rounded shadow">
       <h1 className="text-2xl font-bold mb-4">Pedal Safari Registration</h1>
 
       {error && <p className="text-red-600 mb-4">{error}</p>}

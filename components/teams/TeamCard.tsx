@@ -5,7 +5,7 @@ import Image from 'next/image'
 
 export default function TeamCard({ member }: { member: TeamMember }) {
   return (
-    <div className="bg-white shadow-md rounded-lg p-4 flex flex-col items-center text-center">
+    <div className="bg-green-50 shadow-md rounded-lg p-4 flex flex-col items-center text-center">
       {member.avatarUrl && (
         <Image
           src={member.avatarUrl}

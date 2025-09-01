@@ -20,7 +20,7 @@ export default function EventTable({ logs }: { logs: any[] }) {
         className="mb-4 p-2 border rounded w-full"
       />
 
-      <table className="w-full table-auto border border-gray-300 bg-white">
+      <table className="w-full table-auto border border-gray-300 bg-green-50">
         <thead className="bg-gray-100">
           <tr>
             <th className="px-4 py-2 text-left">Type</th>
